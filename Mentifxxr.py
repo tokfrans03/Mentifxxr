@@ -34,7 +34,7 @@ def printInfo(info):
             elif (x["type"] == "choices") | (x["type"] == "choices_images") | (x["type"] == "winner") | (x["type"] == "ranking"):
                 print("Choices:")
                 for y in x["choices"]:
-                    print("\tNo.:\t", y["position"])
+                    print("\tNo.:\t", y["position"] + 1)
                     print("\tlabel:\t", y["label"])
                     print("\tid:\t", y["id"], "\n")
             print("Question name:\t", x["question"])
@@ -43,7 +43,7 @@ def printInfo(info):
 def getActiveId(info):
     return info["pace"]["active"]
 
-def getActiveQuestion(info):
+def getActiveQuestionid(info):
     activeid = info["pace"]["active"]
     for x in info["questions"]:
         if x["id"] == activeid:
@@ -55,7 +55,25 @@ def getActiveQuestionType(info):
         if x["id"] == activeid:
             return x["type"]
 
-def awnser(Questionid, type, ID, awnser):
+def getActiveQuestion(info):
+    activeid = info["pace"]["active"]
+    for x in info["questions"]:
+        if x["id"] == activeid:
+            return x["choices"]
+
+def awnser(Questionid, type, ID, info, awnser):
+
+    t = getActiveQuestionType(info)
+
+
+    if (t == "choices") | (t == "choices_images") | (t == "winner") | (t == "ranking"):
+        # cross reference
+        for x in getActiveQuestion(info):
+            print(x["position"])
+            if x["position"] + 1 == awnser:
+                awnser = x["id"]
+        print(awnser)
+        exit()
 
     data = {"question_type":type,"vote":awnser}
 
