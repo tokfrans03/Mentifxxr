@@ -7,12 +7,12 @@ try:
     Mentifxxr.printInfo(y)
 
 
-    word = input("What to say\nNothing to send 1024 random numbers\nRandom to send random words\n> ").replace(" ","_")
+    word = input("Nothing to send 1024 random numbers\nRandom to send random words\nWhat to say\n> ").replace(" ","_")
 
     if word == "":
         for x in range(1024):
             word += str(random.randint(1,9))
-    elif word == "random" or word == "Random":
+    elif word == "random" or word == "Random": 
         pass
 
     times = int(input("Times\n> "))
