@@ -64,12 +64,11 @@ def getActiveQuestion(info):
 def awnser(Questionid, type, ID, info, awnser):
 
     t = getActiveQuestionType(info)
-
-
+    u = json.dumps(getActiveQuestion(info))
+    print(u, type(u))
     if (t == "choices") | (t == "choices_images") | (t == "winner") | (t == "ranking"):
         # cross reference
         for x in getActiveQuestion(info):
-            print(x["position"])
             if x["position"] + 1 == awnser:
                 awnser = x["id"]
         print(awnser)
