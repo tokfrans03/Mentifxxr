@@ -28,10 +28,10 @@ def printInfo(info):
         if x["id"] == activeid:
             print("Question Nr:\t", i)
             print("Type:\t\t", x["type"])
-            if x["type"] == "wordcloud":
+            if (x["type"] == "wordcloud") | (x["type"] == "open"):
                 print("Max Enteries:\t", x["max_nb_words"])
 
-            elif (x["type"] == "choices") | (x["type"] == "choices_images") | (x["type"] == "winner") | (x["type"] == "ranking"):
+            elif (x["type"] == "choices") | (x["type"] == "choices_images") | (x["type"] == "winner") | (x["type"] == "ranking") | (x["type"] == "scales"):
                 print("Choices:")
                 for y in x["choices"]:
                     print("\tNo.:\t", y["position"] + 1)
@@ -60,6 +60,11 @@ def getActiveQuestion(info):
     for x in info["questions"]:
         if x["id"] == activeid:
             return x["choices"]
+def getActiveQuestionMinMax(info):
+    activeid = info["pace"]["active"]
+    for x in info["questions"]:
+        if x["id"] == activeid:
+            return x["range"]
 
 def awnser(Questionid, type, ID, info, awnser):
 
