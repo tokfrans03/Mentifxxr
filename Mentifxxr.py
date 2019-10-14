@@ -16,13 +16,28 @@ def getInfo(pin):
         exit()
 
 def printInfo(info):
+    i = 0
     activeid = info["pace"]["active"]
     print("Name:\t\t", info["name"])
     print("id:\t\t", info["id"])
+    print("Pin:\t\t", info["vote_id"])
+    print("No. questions:\t", len(info["questions"]))
+    print("\nQuestion Specific:")
     for x in info["questions"]:
+        i += 1
         if x["id"] == activeid:
+            print("Question Nr:\t", i)
             print("Type:\t\t", x["type"])
-            print("Question:\t", x["question"])
+            if x["type"] == "wordcloud":
+                print("Max Enteries:\t", x["max_nb_words"])
+
+            elif (x["type"] == "choices") | (x["type"] == "choices_images") | (x["type"] == "winner") | (x["type"] == "ranking"):
+                print("Choices:")
+                for y in x["choices"]:
+                    print("\tNo.:\t", y["position"])
+                    print("\tlabel:\t", y["label"])
+                    print("\tid:\t", y["id"], "\n")
+            print("Question name:\t", x["question"])
             print("Public Key:\t", x["public_key"])
 
 def getActiveId(info):
@@ -34,17 +49,13 @@ def getActiveQuestion(info):
         if x["id"] == activeid:
             return x["public_key"]
 
-def getType(info):
+def getActiveQuestionType(info):
     activeid = info["pace"]["active"]
     for x in info["questions"]:
         if x["id"] == activeid:
             return x["type"]
 
 def awnser(Questionid, type, ID, awnser):
-    #print(len(awnser), type)
-    """    if ((len(awnser) > 25 ) & (type == "worldcloud")):
-        print("ERR: can't be more that 25 characters")
-        exit()"""
 
     data = {"question_type":type,"vote":awnser}
 

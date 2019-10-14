@@ -2,16 +2,17 @@ import Mentifxxr
 import random
 
 try:
-    pin = input("Input Pin\n> ")
+    #pin = input("Input Pin\n> ")
+    pin = 522226
     y = Mentifxxr.getInfo(pin)
     Mentifxxr.printInfo(y)
 
 
-    word = input("Nothing to send 1024 random numbers\nRandom to send random words\nWhat to say\n> ").replace(" ","_")
+    word = input("\nNothing to send 1024 random numbers\nRandom to send random words\nWhat to say\n> ").replace(" ","_")
 
     if word == "":
         for x in range(1024):
-            word += str(random.randint(1,9))
+            word += str(random.randint(0,9))
     elif word == "random" or word == "Random": 
         pass
 
@@ -20,7 +21,7 @@ except KeyboardInterrupt:
     print("Interrupt detected")
     exit() 
 
-t = Mentifxxr.getType(y)
+t = Mentifxxr.getActiveQuestionType(y)
 q = Mentifxxr.getActiveQuestion(y)
 
 r = range(times)
