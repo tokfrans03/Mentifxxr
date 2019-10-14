@@ -19,7 +19,7 @@ try:
         elif word == "random" or word == "Random": 
             pass
     elif (t == "choices") | (t == "choices_images") | (t == "winner") | (t == "ranking"):
-        word = input("choose No.\n> ")
+        word = int(input("choose No.\n> "))
 
     times = int(input("Times\n> "))
 except KeyboardInterrupt:
@@ -33,7 +33,7 @@ except ValueError:
 r = range(times)
 
 try:
-    print("sending", len(word), "characters")
+    #print("sending", len(word), "characters")
     for x in r:
         newid = Mentifxxr.getNewID()
 
