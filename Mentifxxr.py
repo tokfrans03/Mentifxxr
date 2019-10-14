@@ -16,11 +16,14 @@ def getInfo(pin):
         exit()
 
 def printInfo(info):
+    activeid = info["pace"]["active"]
     print("Name:\t\t", info["name"])
     print("id:\t\t", info["id"])
-    print("Type:\t\t", info["questions"][1]["type"])
-    print("Question:\t", info["questions"][1]["question"])
-    print("Public Key:\t", info["questions"][1]["public_key"])
+    for x in info["questions"]:
+        if x["id"] == activeid:
+            print("Type:\t\t", x["type"])
+            print("Question:\t", x["question"])
+            print("Public Key:\t", x["public_key"])
 
 def getActiveId(info):
     return info["pace"]["active"]
@@ -38,6 +41,11 @@ def getType(info):
             return x["type"]
 
 def awnser(Questionid, type, ID, awnser):
+    #print(len(awnser), type)
+    """    if ((len(awnser) > 25 ) & (type == "worldcloud")):
+        print("ERR: can't be more that 25 characters")
+        exit()"""
+
     data = {"question_type":type,"vote":awnser}
 
     headers = {
@@ -77,5 +85,5 @@ try:
 
 except KeyboardInterrupt:
     print("Interrupt detected")
-"""
 
+"""
