@@ -76,8 +76,10 @@ def awnser(Questionid, type, ID, info, awnser):
         for x in u:
             if x["position"] + 1 == awnser:
                 awnser = [(x["id"])]
+                
 
     data = {"question_type":type,"vote":awnser}
+    #print(data)
 
     headers = {
     "x-identifier":ID,

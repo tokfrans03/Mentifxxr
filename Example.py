@@ -2,11 +2,12 @@ import Mentifxxr
 import random
 
 try:
+    pin = 834333
     pin = input("Input Pin\n> ")
     y = Mentifxxr.getInfo(pin)
     Mentifxxr.printInfo(y)
 
-
+    wordlist = ["favor", "heavyweight", "became", "habit", "battleground", "growl", "fundamental", "rear", "estimate", "quantum", "soon", "ambitious", "grappler", "limitless", "nuclear", "bluster", "teeth", "crutch", "pigeon", "bed"]
 
     t = Mentifxxr.getActiveQuestionType(y)
     q = Mentifxxr.getActiveQuestionid(y)
@@ -17,7 +18,7 @@ try:
             for x in range(1024):
                 word += str(random.randint(0,9))
         elif word == "random" or word == "Random": 
-            pass
+            word = wordlist
     elif (t == "choices") | (t == "choices_images") | (t == "winner") | (t == "ranking"):
         word = int(input("choose No.\n> "))
     elif (t == "open"):
@@ -49,12 +50,14 @@ try:
             if e == "":
                 word1.append(e)
 
-        for x in range(1, len(word1) + 1):
-            if word1[x - 1] == "":
-                word[x] = "other"
-            else:
-                word[x] = [word1[x - 1], 1]
-
+        print(Mentifxxr.getActiveQuestion(y)) 
+        for z in Mentifxxr.getActiveQuestion(y):
+            for x in range(1, len(word1) + 1):
+                if word1[x - 1] == "":
+                    word[z["id"]] = "other"
+                else:
+                    word[z["id"]] = [word1[x - 1], 1]
+        print(word)
 
     times = int(input("Times\n> "))
 
@@ -68,13 +71,19 @@ except ValueError:
 
 r = range(times)
 
+if word == wordlist:
+    r = wordlist
+
 try:
     #print("sending", len(word), "characters")
     for x in r:
         newid = Mentifxxr.getNewID()
-
-        Mentifxxr.awnser(q, t, newid, y, word)
-        print("\r", x+1, "/", len(r), end="\r")
+        if word == wordlist:
+            Mentifxxr.awnser(q, t, newid, y, x)
+            
+        else:
+            Mentifxxr.awnser(q, t, newid, y, word)
+            print("\r", x+1, "/", len(r), end="\r")
         
 
 except KeyboardInterrupt:
