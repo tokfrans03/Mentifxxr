@@ -2,8 +2,7 @@ import Mentifxxr
 import random
 
 try:
-    #pin = input("Input Pin\n> ")
-    pin = 522226
+    pin = input("Input Pin\n> ")
     y = Mentifxxr.getInfo(pin)
     Mentifxxr.printInfo(y)
 
@@ -33,7 +32,7 @@ try:
     elif t == "scales":
         word1 = []
         word = {}
-        print("Enter a value for each question with a value from ", str(Mentifxxr.getActiveQuestionMinMax(y)["min"]) + "-" + str(Mentifxxr.getActiveQuestionMinMax(y)["max"]))
+        print("Enter a value for each question with a value from", str(Mentifxxr.getActiveQuestionMinMax(y)["min"]) + "-" + str(Mentifxxr.getActiveQuestionMinMax(y)["max"]), "or nothing to skip")
         while len(word1) < len(Mentifxxr.getActiveQuestion(y)):
             try:
                 e = input("> ")
