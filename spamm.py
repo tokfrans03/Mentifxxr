@@ -1,8 +1,7 @@
 import Mentifxxr
 from threading import Thread
 
-
-pin = 834333
+pin = input("Input Pin\n> ")
 y = Mentifxxr.getInfo(pin)
 Mentifxxr.printInfo(y)
 
