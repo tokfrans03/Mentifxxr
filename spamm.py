@@ -31,7 +31,7 @@ print()
 for x in range(i):
     idtred[x].join()
     x += 1
-    print(" Waiting:",  x, "/", i, end="\r")
+    print(" Finishing:",  x, "/", i, end="\r")
 
 #print(len(idtred), ids)
 x = 0
