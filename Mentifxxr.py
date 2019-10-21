@@ -98,8 +98,8 @@ def spamm(word):
         global ids
         ids.append(Mentifxxr.getNewID())
 
-    for x in range(i):
-        t1 = Thread(target = newid)
+    for x in range(1):
+        t1 = Thread(target = addnewidtolist)
         idtred.append(t1)
 
 
