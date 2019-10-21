@@ -1,5 +1,6 @@
 import json
 import requests
+from threading import Thread
 
 
 def getNewID():
@@ -88,6 +89,19 @@ def awnser(Questionid, type, ID, info, awnser):
     }
     
     requests.post(url = 'https://www.menti.com/core/votes/' + Questionid, data = json.dumps(data), headers=headers)
+
+def spamm(, word):
+    ids = []
+    idtred = []
+
+    def addnewidtolist():
+        global ids
+        ids.append(Mentifxxr.getNewID())
+
+    for x in range(i):
+        t1 = Thread(target = newid)
+        idtred.append(t1)
+
 
 """
 try:
