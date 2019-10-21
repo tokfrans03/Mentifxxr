@@ -90,7 +90,7 @@ def awnser(Questionid, type, ID, info, awnser):
     
     requests.post(url = 'https://www.menti.com/core/votes/' + Questionid, data = json.dumps(data), headers=headers)
 
-def spamm(, word):
+def spamm(word):
     ids = []
     idtred = []
 
