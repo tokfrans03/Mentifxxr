@@ -9,7 +9,10 @@ def getNewID():
     return x["identifier"]
 
 def getInfo(pin, err=True):
-    x = requests.get('https://www.menti.com/core/objects/vote_ids/' + str(pin)).text
+    try:
+        x = requests.get('https://www.menti.com/core/objects/vote_ids/' + str(pin)).text   
+    except:
+        print("err", end="\r")
     try:
         (json.loads(x))["id"]
         return json.loads(x)
@@ -128,41 +131,8 @@ def spamm(word):
 
     def addnewidtolist():
         global ids
-        ids.append(Mentifxxr.getNewID())
+        ids.append(getNewID())
 
     for x in range(1):
         t1 = Thread(target = addnewidtolist)
         idtred.append(t1)
-
-
-"""
-try:
-    pin = 569245
-    word = "small_Brain"
-
-    pin = input("Input Pin\n> ")
-    y = getInfo(pin)
-    
-    word = input("What to say\n> ").replace(" ","_")
-    times = int(input("Times\n> "))
-    
-    printInfo(y)
-    q = getActiveQuestion(y)
-    for x in y["questions"]:
-        if x["id"] == q:
-            t = x["type"]
-            print(x["type"])
-    t = "wordcloud"
-
-    r = range(times)
-
-    for x in r:
-        newid = getNewID()
-        awnser(q, t, newid, word)
-        print("\r", x+1, "/", len(r), end="\r")
-        
-
-except KeyboardInterrupt:
-    print("Interrupt detected")
-
-"""

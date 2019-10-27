@@ -1,2 +1,6 @@
 
 .DS_Store
+eta.py
+.vscode/settings.json
+Example.py
+*.pyc
