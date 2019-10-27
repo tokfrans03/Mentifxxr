@@ -10,6 +10,7 @@ data = []
 threads = []
 maxthreads = 5
 err = 0
+wait = 1
 
 showresults = False
 
@@ -50,6 +51,7 @@ for x in range(len(threads)):
     try:
         threads[x].start()
         threads[x-maxthreads].join()
+        sleep(wait)
     except:
         err += 1
     bar.numerator = x
