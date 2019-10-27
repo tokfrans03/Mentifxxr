@@ -4,6 +4,7 @@ from time import sleep
 from collections import Counter
 from collections import OrderedDict
 from etaprogress.progress import ProgressBar
+import daemon
 
 okpins = []
 data = []
@@ -35,44 +36,46 @@ def getcode(pin):
             data.append(z["type"])
     #print(okpins)
 
-for x in range(begin, end):
-    t1 = Thread(target = getcode, args=(x,))
-    threads.append(t1)
-    #print(x)
-    
-    print("Loading: ", str(round( (((x-begin)/(end-begin)) * 100), 1)) + "%", end="\r")
+with daemon.DaemonContext():
 
-input("\nPress enter to begin getting codes")
+    for x in range(begin, end):
+        t1 = Thread(target = getcode, args=(x,))
+        threads.append(t1)
+        #print(x)
+        
+        print("Loading: ", str(round( (((x-begin)/(end-begin)) * 100), 1)) + "%", end="\r")
 
-for x in range(len(threads)):
-    try:
-        threads[x].start()
-        threads[x-maxthreads].join()
-    except:
-        err += 1
-    bar.numerator = x
-    print(bar, end="\r")
-    #print("Sending: ", str(round(float((x/(end-begin))* 100), 4)) + "%     ", end="\r")
+    input("\nPress enter to begin getting codes")
 
-print()
+    for x in range(len(threads)):
+        try:
+            threads[x].start()
+            threads[x-maxthreads].join()
+        except:
+            err += 1
+        bar.numerator = x
+        print(bar, end="\r")
+        #print("Sending: ", str(round(float((x/(end-begin))* 100), 4)) + "%     ", end="\r")
+
+    print()
 
 
-print()
-print("Result:\n")
-print("Searched  " + str(end-begin) + " codes and", len(okpins), "was valid with", err, "errors.", str(int(round(len(okpins)/(end-begin), 2) * 100)) + "%")
+    print()
+    print("Result:\n")
+    print("Searched  " + str(end-begin) + " codes and", len(okpins), "was valid with", err, "errors.", str(int(round(len(okpins)/(end-begin), 2) * 100)) + "%")
 
-print("Statistics:")
-print("-" * 30 + "\n")
+    print("Statistics:")
+    print("-" * 30 + "\n")
 
-l = Counter(data)
-l = OrderedDict(sorted(l.items(), key=lambda t: t[1], reverse=True))
+    l = Counter(data)
+    l = OrderedDict(sorted(l.items(), key=lambda t: t[1], reverse=True))
 
-for x, y in l.items():
-    print(x + ":", y)
+    for x, y in l.items():
+        print(x + ":", y)
 
-if input("Do you want to see all the results? (1/0 True/False)") == True:
+    if input("Do you want to see all the results? (1/0 True/False)") == True:
 
-    for x in okpins:
-        print("\n" + "-" * 30 + "\n")
-        for y in x:
-            print(y)
+        for x in okpins:
+            print("\n" + "-" * 30 + "\n")
+            for y in x:
+                print(y)
