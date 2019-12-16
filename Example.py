@@ -62,6 +62,8 @@ try:
                         else:
                             word[z["id"]] = [word1[x - 1], 1]
                 print(word)
+            elif t == "qfa":
+                word = input("Your question\n> ")
 
             times = int(input("Times\n> "))
 
@@ -73,24 +75,25 @@ try:
             print("No value enterd, defaulting to 1")
 
 
-    r = range(times)
+        r = range(times)
+        
 
-    if word == wordlist:
-        r = wordlist
+        if word == "wordlist":
+            r = wordlist
 
-    try:
-        #print("sending", len(word), "characters")
-        for x in r:
-            newid = Mentifxxr.getNewID()
-            if word == wordlist:
-                Mentifxxr.awnser(q, t, newid, y, x)
-                
-            else:
-                Mentifxxr.awnser(q, t, newid, y, word)
-                print("\r", x+1, "/", len(r), end="\r")
-    except KeyboardInterrupt:
-        print("Interrupt detected, Quitting")
-        exit()
+        try:
+            print("sending", len(word), "characters")
+            for x in r:
+                newid = Mentifxxr.getNewID()
+                if word == "wordlist":
+                    Mentifxxr.awnser(q, t, newid, y, x)
+                    
+                else:
+                    Mentifxxr.awnser(q, t, newid, y, word)
+                    print("\r", x+1, "/", len(r), end="\r")
+        except KeyboardInterrupt:
+            print("Interrupt detected, Quitting")
+            exit()
             
 
 except KeyboardInterrupt:

@@ -10,12 +10,12 @@ data = []
 threads = []
 maxthreads = 5
 err = 0
-wait = 1
+wait = 0
 
 showresults = False
 
 begin = 800000
-end = 900000
+end = 801000
 
 bar = ProgressBar(end-begin, max_width=100)
 
@@ -74,9 +74,9 @@ l = OrderedDict(sorted(l.items(), key=lambda t: t[1], reverse=True))
 for x, y in l.items():
     print(x + ":", y)
 
-if input("Do you want to see all the results? (1/0 True/False)") == True:
+#if input("Do you want to see all the results? (1/0 True/False)") == True:
 
-    for x in okpins:
-        print("\n" + "-" * 30 + "\n")
-        for y in x:
-            print(y)
+for x in okpins:
+    print("\n" + "-" * 30 + "\n")
+    for y in x:
+        print(y)
