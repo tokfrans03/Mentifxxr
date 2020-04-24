@@ -5,17 +5,19 @@ import datetime
 
 
 def getNewID():
-    x = json.loads(requests.post('https://www.menti.com/core/identifier').text)
+    x = json.loads(requests.post('https://www.menti.com/core/identifier', headers={"user-agent": ""}).text)
     return x["identifier"]
 
 
 def getInfo(pin, err=True):
     try:
         x = requests.get(
-            'https://www.menti.com/core/objects/vote_ids/' + str(pin)).text
+            'https://www.menti.com/core/vote_ids/' + str(pin) + "/series", headers={"user-agent": ""}).text
+            'https://www.menti.com/core/vote-ids/' + str(pin) + '/series'
     except:
         print("err", end="\r")
     try:
+        print(x)
         (json.loads(x))["id"]
         return json.loads(x)
     except KeyError:
@@ -132,11 +134,11 @@ def awnser(Questionid, type, ID, info, awnser):
         quesid = info["id"]
 
         series = json.loads(requests.get(
-            url='https://www.menti.com/core/vote-keys/' + quesid + '/qfa').text)
+            url='https://www.menti.com/core/vote-keys/' + quesid + '/qfa', headers={"user-agent": ""}).text)
 
         series = series["series_id"]
 
-        data = {"series_id": series, "question": awnser}
+        data = {"series_id": series, "question": awnser, "user-agent": ""}
 
         # print("sending", data, "to https://www.menti.com/core/qfa")
 
@@ -161,6 +163,7 @@ def awnser(Questionid, type, ID, info, awnser):
             "x-identifier": ID,
             "cookie": "identifier1=" + ID,
             "Content-Type": "application/json",
+            "user-agent": ""
         }
 
         requests.post(url='https://www.menti.com/core/votes/' +
@@ -178,3 +181,7 @@ def spamm(word):
     for x in range(1):
         t1 = Thread(target=addnewidtolist)
         idtred.append(t1)
+
+
+if __name__ == "__main__":
+    import Example

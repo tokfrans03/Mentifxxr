@@ -16,6 +16,8 @@ try:
             t = Mentifxxr.getActiveQuestionType(y)
             q = Mentifxxr.getActiveQuestionid(y)
 
+            print("Current question type is:", t)
+
             if (t == "wordcloud"):
                 word = input("\nNothing to send 1024 random numbers\nRandom to send random words\nWhat to say\n> ").replace(" ","_")
                 if word == "":
@@ -70,9 +72,10 @@ try:
         except KeyboardInterrupt:
             print("Interrupt detected")
             exit() 
-        except ValueError:
-            times = 1
-            print("No value enterd, defaulting to 1")
+        # except ValueError:
+        #     times = 1
+        #     print("No value enterd, defaulting to 1")
+        
 
 
         r = range(times)
