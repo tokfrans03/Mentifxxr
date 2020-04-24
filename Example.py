@@ -72,9 +72,9 @@ try:
         except KeyboardInterrupt:
             print("Interrupt detected")
             exit() 
-        # except ValueError:
-        #     times = 1
-        #     print("No value enterd, defaulting to 1")
+        except ValueError:
+            times = 1
+            print("No value enterd, defaulting to 1")
         
 
 

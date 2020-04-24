@@ -12,12 +12,11 @@ def getNewID():
 def getInfo(pin, err=True):
     try:
         x = requests.get(
-            'https://www.menti.com/core/vote_ids/' + str(pin) + "/series", headers={"user-agent": ""}).text
-            'https://www.menti.com/core/vote-ids/' + str(pin) + '/series'
+            'https://www.menti.com/core/vote-ids/' + str(pin) + "/series", headers={"user-agent": ""}).text
     except:
         print("err", end="\r")
     try:
-        print(x)
+        # print(x)
         (json.loads(x))["id"]
         return json.loads(x)
     except KeyError:
