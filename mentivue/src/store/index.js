@@ -6,26 +6,26 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    pin: undefined,
+    pin: 542669,
     idUrl: "https://www.menti.com/core/identifier",
     infoUrl: 'https://www.menti.com/core/vote-ids/',
-    id: "",
+    voteUrl: "https://www.menti.com/core/votes/",
     ids: [],
     info: {}
   },
   mutations: {
     Get_ID: (state, append) => {
-      axios
+      return axios
         .post(state.idUrl)
-        .catch(error => {
-          console.log(error)
-        })
+        // .catch(error => {
+        //   console.log(error)
+        // })
         .then(response => {
-          if (append) {
-            state.ids.push(response.data.identifier);
-          } else {
-            state.id = response.data.identifier;
-          }
+          // if (append) {sh(response.data.identifier);
+          // } else {
+          //   state.ids.pu
+            return response.data.identifier;
+          // }
         });
     },
     Get_info: (state, pin) => {
