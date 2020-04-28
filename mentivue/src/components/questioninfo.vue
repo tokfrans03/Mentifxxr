@@ -31,6 +31,14 @@
                 ></v-text-field>
               </template>
             </v-slider>
+            <p>{{ids.length}}</p>
+            <v-btn
+              :color="gather? 'color: green': 'color: red'"
+              class="mr-4"
+              @click="send_ultra(Question.type, Question.id, text, amount)"
+            >ultra spammm stage {{gather? "1": "2"}}</v-btn>
+            <v-switch label="Stage" v-model="gather"></v-switch>
+
             <v-btn
               color="success"
               v-if="!random"
@@ -164,7 +172,10 @@ export default {
       selected_choise: "",
       question: "",
       tosend: 0,
-      sent: 0
+      sent: 0,
+      gather: true,
+      ids: [],
+      id_wanted: 0
     };
   },
   props: {
@@ -198,6 +209,43 @@ export default {
           })
       );
     },
+    send_ultra(type, id, text, times) {
+      if (this.gather) {
+        this.id_wanted = times;
+        this.tosend += times;
+        for (let i = 0; i < times; i++) {
+          this.Get_ID().then(ID => {
+            this.sent++;
+            this.ids.push(ID);
+            // console.log(i);
+          });
+        }
+      } else {
+        this.tosend = this.ids.length
+        this.send = 0
+        for (let ID of this.ids) {
+          let headers = {
+            "x-identifier": ID,
+            // cookie: "identifier1=" + ID, // får inte för chrome :/
+            // "origin": "https://www.menti.com", // får inte för chrome :/
+            "Content-Type": "application/json",
+            "x-requested-with": "localhost"
+          };
+          let data = { question_type: type, vote: text };
+          axios
+            .post(
+              this.$store.state.cors_server + this.$store.state.voteUrl + id,
+              data,
+              {
+                headers: headers
+              }
+            )
+            .then(() => {
+              this.sent++;
+            });
+        }
+      }
+    },
     send(type, id, text, times) {
       for (let i = 0; i < times; i++) {
         this.tosend++;
@@ -220,9 +268,15 @@ export default {
               let data = { question_type: type, vote: text };
 
               axios
-                .post(this.$store.state.cors_server + this.$store.state.voteUrl + id, data, {
-                  headers: headers
-                })
+                .post(
+                  this.$store.state.cors_server +
+                    this.$store.state.voteUrl +
+                    id,
+                  data,
+                  {
+                    headers: headers
+                  }
+                )
                 .then(() => {
                   this.sent++;
                 });
@@ -233,9 +287,13 @@ export default {
               let data = { vote_key: seriesid, question: text };
 
               axios
-                .post(this.$store.state.cors_server + this.$store.state.qfaUrl, data, {
-                  headers: headers
-                })
+                .post(
+                  this.$store.state.cors_server + this.$store.state.qfaUrl,
+                  data,
+                  {
+                    headers: headers
+                  }
+                )
                 .then(() => {
                   this.sent++;
                 });
@@ -245,7 +303,11 @@ export default {
             case "like": {
               axios
                 .post(
-                  this.$store.state.cors_server + this.$store.state.qfaUrl + "/" + text + "/upvote",
+                  this.$store.state.cors_server +
+                    this.$store.state.qfaUrl +
+                    "/" +
+                    text +
+                    "/upvote",
                   {},
                   {
                     headers: headers

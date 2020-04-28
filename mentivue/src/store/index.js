@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    pin: 661884,
+    pin: 852698,
     // cors_server: "https://cors-anywhere.herokuapp.com/",
     cors_server: "http://192.168.0.54:8090/",
     idUrl: "https://www.menti.com/core/identifier",
