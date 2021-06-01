@@ -5,14 +5,20 @@ import datetime
 
 
 def getNewID():
-    x = json.loads(requests.post('https://www.menti.com/core/identifier', headers={"user-agent": ""}).text)
+    x = json.loads(
+        requests.post(
+            "https://www.menti.com/core/identifier", headers={"user-agent": ""}
+        ).text
+    )
     return x["identifier"]
 
 
 def getInfo(pin, err=True):
     try:
         x = requests.get(
-            'https://www.menti.com/core/vote-ids/' + str(pin) + "/series", headers={"user-agent": ""}).text
+            "https://www.menti.com/core/vote-ids/" + str(pin) + "/series",
+            headers={"user-agent": ""},
+        ).text
     except:
         print("err", end="\r")
     try:
@@ -32,8 +38,12 @@ def printInfo(info):
     print("Name:\t\t", info["name"])
     print("id:\t\t", info["id"])
     print("Pin:\t\t", info["vote_id"])
-    print("last update:\t", datetime.datetime.strptime(
-        (info["updated_at"]).replace("+00:00", ""), '%Y-%m-%dT%H:%M:%S'))
+    print(
+        "last update:\t",
+        datetime.datetime.strptime(
+            (info["updated_at"]).replace("+00:00", ""), "%Y-%m-%dT%H:%M:%S"
+        ),
+    )
     print("No. questions:\t", len(info["questions"]))
     print("\nQuestion Specific:")
     for x in info["questions"]:
@@ -44,7 +54,13 @@ def printInfo(info):
             if (x["type"] == "wordcloud") | (x["type"] == "open"):
                 print("Max Enteries:\t", x["max_nb_words"])
 
-            elif (x["type"] == "choices") | (x["type"] == "choices_images") | (x["type"] == "winner") | (x["type"] == "ranking") | (x["type"] == "scales"):
+            elif (
+                (x["type"] == "choices")
+                | (x["type"] == "choices_images")
+                | (x["type"] == "winner")
+                | (x["type"] == "ranking")
+                | (x["type"] == "scales")
+            ):
                 print("Choices:")
                 for y in x["choices"]:
                     print("\tNo.:\t", y["position"] + 1)
@@ -61,8 +77,14 @@ def listInfo(info):
     l.append("Name: " + info["name"])
     l.append("id: " + info["id"])
     l.append("Pin: " + str(info["vote_id"]))
-    l.append("last update: " + str(datetime.datetime.strptime(
-        (info["updated_at"]).replace("+00:00", ""), '%Y-%m-%dT%H:%M:%S')))
+    l.append(
+        "last update: "
+        + str(
+            datetime.datetime.strptime(
+                (info["updated_at"]).replace("+00:00", ""), "%Y-%m-%dT%H:%M:%S"
+            )
+        )
+    )
     l.append("No. questions: " + str(len(info["questions"])))
     l.append("Question Specific:")
     for x in info["questions"]:
@@ -73,7 +95,13 @@ def listInfo(info):
             if (x["type"] == "wordcloud") | (x["type"] == "open"):
                 l.append("Max Enteries: " + str(x["max_nb_words"]))
 
-            elif (x["type"] == "choices") | (x["type"] == "choices_images") | (x["type"] == "winner") | (x["type"] == "ranking") | (x["type"] == "scales"):
+            elif (
+                (x["type"] == "choices")
+                | (x["type"] == "choices_images")
+                | (x["type"] == "winner")
+                | (x["type"] == "ranking")
+                | (x["type"] == "scales")
+            ):
                 l.append("Choices:")
                 for y in x["choices"]:
                     l.append("  No.: " + str(y["position"] + 1))
@@ -82,6 +110,32 @@ def listInfo(info):
             l.append("  Question name: " + str(x["question"]))
             l.append("  Public Key: " + str(x["public_key"]))
     return l
+
+
+def listChoices(info) -> list[str]:
+    choices = list()
+    activeid = info["pace"]["active"]
+    i = 0
+
+    for x in info["questions"]:
+        i += 1
+        if x["id"] == activeid:
+            if (
+                (x["type"] == "choices")
+                | (x["type"] == "choices_images")
+                | (x["type"] == "winner")
+                | (x["type"] == "ranking")
+                | (x["type"] == "scales")
+            ):
+                for y in x["choices"]:
+                    choices.append(
+                        "No.: {}, label: {}, id: {}".format(
+                            str(y["position"] + 1), y["label"], str(y["id"])
+                        )
+                    )
+            else:
+                return []
+    return choices
 
 
 def getActiveId(info):
@@ -116,7 +170,7 @@ def getActiveQuestionMinMax(info):
             return x["range"]
 
 
-def awnser(Questionid, type, ID, info, awnser):
+def answer(Questionid, type, ID, info, answer):
 
     headers = {
         "x-identifier": ID,
@@ -132,41 +186,54 @@ def awnser(Questionid, type, ID, info, awnser):
 
         quesid = info["id"]
 
-        series = json.loads(requests.get(
-            url='https://www.menti.com/core/vote-keys/' + quesid + '/qfa', headers={"user-agent": ""}).text)
+        series = json.loads(
+            requests.get(
+                url="https://www.menti.com/core/vote-keys/" + quesid + "/qfa",
+                headers={"user-agent": ""},
+            ).text
+        )
 
         series = series["series_id"]
 
-        data = {"series_id": series, "question": awnser, "user-agent": ""}
+        data = {"series_id": series, "question": answer, "user-agent": ""}
 
         # print("sending", data, "to https://www.menti.com/core/qfa")
 
-        requests.post(url='https://www.menti.com/core/qfa',
-                      data=json.dumps(data), headers=headers)
+        requests.post(
+            url="https://www.menti.com/core/qfa", data=json.dumps(data), headers=headers
+        )
 
     else:
 
         t = getActiveQuestionType(info)
         u = getActiveQuestion(info)
-        #print("choices:", u)
-        if (t == "choices") | (t == "choices_images") | (t == "winner") | (t == "ranking"):
+        # print("choices:", u)
+        if (
+            (t == "choices")
+            | (t == "choices_images")
+            | (t == "winner")
+            | (t == "ranking")
+        ):
             # cross reference
             for x in u:
-                if x["position"] + 1 == awnser:
-                    awnser = [(x["id"])]
+                if x["position"] + 1 == answer:
+                    answer = [(x["id"])]
 
-        data = {"question_type": type, "vote": awnser}
+        data = {"question_type": type, "vote": answer}
         # print(data)
 
         headers = {
             "x-identifier": ID,
             "cookie": "identifier1=" + ID,
             "Content-Type": "application/json",
-            "user-agent": ""
+            "user-agent": "",
         }
 
-        requests.post(url='https://www.menti.com/core/votes/' +
-                      Questionid, data=json.dumps(data), headers=headers)
+        requests.post(
+            url="https://www.menti.com/core/votes/" + Questionid,
+            data=json.dumps(data),
+            headers=headers,
+        )
 
 
 def spamm(word):
@@ -174,7 +241,6 @@ def spamm(word):
     idtred = []
 
     def addnewidtolist():
-        global ids
         ids.append(getNewID())
 
     for x in range(1):

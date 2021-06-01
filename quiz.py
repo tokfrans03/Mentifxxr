@@ -9,7 +9,7 @@ Mentifxxr.printInfo(y)
 t = Mentifxxr.getActiveQuestionType(y)
 q = Mentifxxr.getActiveQuestionid(y)
 
-i  = y["id"]
+i = y["id"]
 
 newid = Mentifxxr.getNewID()
 
@@ -19,5 +19,7 @@ headers = {
     "Content-Type": "application/json",
 }
 
-a = requests.post(url = "https://www.menti.com/core/quiz/" + i + "/players/" + newid, headers=headers).text
+a = requests.post(
+    url="https://www.menti.com/core/quiz/" + i + "/players/" + newid, headers=headers
+).text
 print(a)
